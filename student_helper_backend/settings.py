@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
 
-    'rest_framework'
+    'rest_framework',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -113,6 +114,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+#user settings
+AUTH_USER_MODEL = "accounts.User"
+ACCOUNT_UNIQUE_EMAIL = True
+
+
 
 LANGUAGE_CODE = 'en-us'
 
