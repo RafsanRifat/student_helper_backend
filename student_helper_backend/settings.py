@@ -167,7 +167,7 @@ ENV_VARIABLES = env
 SECRET_KEY = env('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -262,12 +262,28 @@ USE_TZ = True
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]  # new
-STATIC_ROOT = BASE_DIR / "staticfiles"  # new
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# STATIC_URL = "static/"
+# STATICFILES_DIRS = [BASE_DIR / "static"]  # new
+# STATIC_ROOT = BASE_DIR / "staticfiles"  # new
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media/'
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    # BASE_DIR / 'static',
+    # BASE_DIR / 'quizes' / 'static',
+
+    # Othoba evabeo likha jay jay
+    os.path.join(BASE_DIR, 'static')
+]
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 django_heroku.settings(locals())
