@@ -12,20 +12,31 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+import django_heroku
 
+env = environ.Env(
+    # set casting, default value
+    SECRET_KEY=(str, ''),
+    # EMAIL_HOST_USER=(str, ''),
+    # EMAIL_HOST_PASSWORD=(str, ''),
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Initialise environment variables
+ENV_VARIABLES = env
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yxwpnnvik=eacyqwv*imsob9lq2687cw(-sme7dscsx_r4!71l'
+SECRET_KEY = env('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -35,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
 
     'rest_framework'
@@ -42,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -113,15 +126,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    # BASE_DIR / 'static',
-    # BASE_DIR / 'quizes' / 'static',
-
-    # Othoba evabeo likha jay jay
-    os.path.join(BASE_DIR, 'static')
-]
+# STATICFILES_DIRS = [
+#     # BASE_DIR / 'static',
+#     # BASE_DIR / 'quizes' / 'static',
+#
+#     # Othoba evabeo likha jay jay
+#     os.path.join(BASE_DIR, 'static')
+# ]
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -130,3 +145,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
