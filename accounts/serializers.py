@@ -39,8 +39,8 @@ class TeacherSignupSerializer(serializers.ModelSerializer):
 
 # This Serializer give response of teacher custom fields after creating Teacher instance
 class TeacherSignupSerializer2(serializers.ModelSerializer):
-    username = serializers.ReadOnlyField(source='User.username')
-    email = serializers.ReadOnlyField(source='User.email')
+    username = serializers.ReadOnlyField(source='user.username')
+    email = serializers.ReadOnlyField(source='user.email')
 
     class Meta:
         model = Teacher
@@ -85,8 +85,9 @@ class StudentSignupSerializer(serializers.ModelSerializer):
 
 # This Serializer give response of teacher custom fields after creating Teacher instance
 class StudentSignupSerializer2(serializers.ModelSerializer):
-    username = serializers.ReadOnlyField(source='User.username')
-    email = serializers.ReadOnlyField(source='User.email')
+    username = serializers.ReadOnlyField(source='user.username')
+    email = serializers.ReadOnlyField(source='user.email')
+
     class Meta:
         model = Student
         fields = ['class_name', 'institute_name', 'username', 'email', ]

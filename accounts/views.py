@@ -36,8 +36,8 @@ class TeacherSignupView(generics.GenericAPIView):
         serializer2 = TeacherSignupSerializer2(teacher)
 
         return Response({
-            "teacher": UserSerializer(user, context=self.get_serializer_context()).data,
-            "Institute": serializer2.data,
+            # "teacher": UserSerializer(user, context=self.get_serializer_context()).data,
+            "teacher": serializer2.data,
             "message": "account created successfully",
         })
 
@@ -55,7 +55,23 @@ class StudentSignupView(generics.GenericAPIView):
         student = Student.objects.get(user__username=username)
         Studentextrainfo = StudentSignupSerializer2(student)
         return Response({
-            "student_basic_info": UserSerializer(user, context=self.get_serializer_context()).data,
-            "student_extra_info": Studentextrainfo.data,
+            # "student_basic_info": UserSerializer(user, context=self.get_serializer_context()).data,
+            "student": Studentextrainfo.data,
             "message": "account created successfully"
         })
+
+
+# Teacher List (only view)
+class TeacherList(generics.ListAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSignupSerializer2
+
+
+# Teacher List (only view)
+class StudentList(generics.ListAPIView):
+    # queryset = Student.objects.all()
+    serializer_class = StudentSignupSerializer2
+
+    def get_queryset(self):
+        students = Student.objects.all()
+        return students
