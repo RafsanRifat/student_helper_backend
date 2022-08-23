@@ -14,9 +14,14 @@ from .models import Teacher, Student
 from .permissions import IsTeacherUser
 
 
-@api_view(['GET', 'POST'])
-def students(request):
-    return Response({"message": "Hi, welcome to our new API"})
+@api_view(['GET'])
+def allurls(request):
+    return Response({
+        "Teacher List": "https://studenthelperbackend.herokuapp.com/api/teacher/list",
+        "Student List": "https://studenthelperbackend.herokuapp.com/api/student/list",
+        "Teacher Signup": "https://studenthelperbackend.herokuapp.com/api/teacher/signup",
+        "Student Signup": "https://studenthelperbackend.herokuapp.com/api/student/signup",
+    })
 
 
 # Teacher SignUo view
