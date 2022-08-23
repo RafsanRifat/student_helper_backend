@@ -18,6 +18,7 @@ def students(request):
     return Response({"message": "Hi, welcome to our new API"})
 
 
+# Teacher SignUo view
 class TeacherSignupView(generics.GenericAPIView):
     serializer_class = TeacherSignupSerializer
 
@@ -26,13 +27,13 @@ class TeacherSignupView(generics.GenericAPIView):
         print(serializer)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        user_id = (user.id)
-        user_id = user_id - 1
-        teacher = Teacher.objects.get(id=user_id)
+        username = user.username
+        teacher = Teacher.objects.get(user__username=username)
         institute = teacher.institute_name
         print(institute)
         print(teacher)
         serializer2 = TeacherSignupSerializer2(teacher)
+
         return Response({
             "teacher": UserSerializer(user, context=self.get_serializer_context()).data,
             "Institute": serializer2.data,
