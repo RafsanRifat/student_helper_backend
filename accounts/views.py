@@ -21,6 +21,7 @@ def allurls(request):
         "Student List": "https://studenthelperbackend.herokuapp.com/api/student/list",
         "Teacher Signup": "https://studenthelperbackend.herokuapp.com/api/teacher/signup",
         "Student Signup": "https://studenthelperbackend.herokuapp.com/api/student/signup",
+        "Login Users": "https://studenthelperbackend.herokuapp.com/api/token/",
     })
 
 
