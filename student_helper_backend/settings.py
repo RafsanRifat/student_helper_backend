@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import environ
 import django_heroku
+from datetime import timedelta
 
 env = environ.Env(
     # set casting, default value
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'accounts'
 ]
 
@@ -133,6 +135,10 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
+}
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 # Static files (CSS, JavaScript, Images)

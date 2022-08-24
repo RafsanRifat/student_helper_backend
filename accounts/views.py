@@ -5,6 +5,7 @@ from django.shortcuts import render
 # Rest_Framework
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.http import request
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
@@ -15,13 +16,14 @@ from .permissions import IsTeacherUser
 
 
 @api_view(['GET'])
-def allurls(request):
+def api_endpoints(request):
     return Response({
         "Teacher List": "https://studenthelperbackend.herokuapp.com/api/teacher/list",
         "Student List": "https://studenthelperbackend.herokuapp.com/api/student/list",
         "Teacher Signup": "https://studenthelperbackend.herokuapp.com/api/teacher/signup",
         "Student Signup": "https://studenthelperbackend.herokuapp.com/api/student/signup",
         "Login Users": "https://studenthelperbackend.herokuapp.com/api/token/",
+        "Logout Users": "https://studenthelperbackend.herokuapp.com/api/logout",
     })
 
 
@@ -81,3 +83,19 @@ class StudentList(generics.ListAPIView):
     def get_queryset(self):
         students = Student.objects.all()
         return students
+
+
+# user logout view
+"""
+ Steps --->>>
+        1. Delete both, refresh & access tokens from the client. Also, keep access token expiry as short as possible.
+        2. Send the access token with the url
+"""
+class UserLogoutView(APIView):
+    def post(self, request):
+        try:
+            token = RefreshToken(request.data.get('refresh'))
+            token.blacklist()
+            return Response("Success")
+        except:
+            return Response("Invalid token")
