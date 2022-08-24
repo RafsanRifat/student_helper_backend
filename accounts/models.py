@@ -15,6 +15,7 @@ class User(AbstractUser):
 class Teacher(models.Model):
     user = models.OneToOneField(User, related_name="teacher", on_delete=models.CASCADE)
     institute_name = models.CharField(max_length=150, null=True, blank=True)
+    subject = models.CharField(max_length=150, blank=True, null=True)
 
     def __str__(self):
         return self.user.username

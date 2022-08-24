@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 # Rest_Framework
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -71,12 +72,14 @@ class StudentSignupView(generics.GenericAPIView):
 
 # Teacher List (only view)
 class TeacherList(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
     queryset = Teacher.objects.all()
     serializer_class = TeacherSignupSerializer2
 
 
 # Teacher List (only view)
 class StudentList(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
     # queryset = Student.objects.all()
     serializer_class = StudentSignupSerializer2
 
@@ -91,6 +94,8 @@ class StudentList(generics.ListAPIView):
         1. Delete both, refresh & access tokens from the client. Also, keep access token expiry as short as possible.
         2. Send the access token with the url
 """
+
+
 class UserLogoutView(APIView):
     def post(self, request):
         try:
