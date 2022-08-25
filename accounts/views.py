@@ -19,12 +19,22 @@ from .permissions import IsTeacherUser
 @api_view(['GET'])
 def api_endpoints(request):
     return Response({
-        "Teacher List": "https://studenthelperbackend.herokuapp.com/api/teacher/list",
-        "Student List": "https://studenthelperbackend.herokuapp.com/api/student/list",
-        "Teacher Signup": "https://studenthelperbackend.herokuapp.com/api/teacher/signup",
-        "Student Signup": "https://studenthelperbackend.herokuapp.com/api/student/signup",
-        "Login Users": "https://studenthelperbackend.herokuapp.com/api/token/",
-        "Logout Users": "https://studenthelperbackend.herokuapp.com/api/logout",
+        "Live": {
+            "Teacher List": "https://studenthelperbackend.herokuapp.com/api/teacher/list",
+            "Student List": "https://studenthelperbackend.herokuapp.com/api/student/list",
+            "Teacher Signup": "https://studenthelperbackend.herokuapp.com/api/teacher/signup",
+            "Student Signup": "https://studenthelperbackend.herokuapp.com/api/student/signup",
+            "Login Users": "https://studenthelperbackend.herokuapp.com/api/token/",
+            "Logout Users": "https://studenthelperbackend.herokuapp.com/api/logout",
+        },
+        "Local": {
+            "Teacher List": "http://localhost:8000/api/teacher/list",
+            "Student List": "http://localhost:8000/api/student/list",
+            "Teacher Signup": "http://localhost:8000/api/teacher/signup",
+            "Student Signup": "http://localhost:8000/api/student/signup",
+            "Login Users": "http://localhost:8000/api/token/",
+            "Logout Users": "http://localhost:8000/api/logout",
+        }
     })
 
 
