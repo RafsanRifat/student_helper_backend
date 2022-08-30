@@ -12,7 +12,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from .serializers import TeacherSignupSerializer, UserSerializer, TeacherSignupSerializer2, StudentSignupSerializer, \
     StudentSignupSerializer2
-from .models import Teacher, Student
+from .models import Teacher, Student, User
 from .permissions import IsTeacherUser
 
 
@@ -22,6 +22,7 @@ def api_endpoints(request):
         "Live": {
             "Teacher List": "https://studenthelperbackend.herokuapp.com/api/teacher/list",
             "Student List": "https://studenthelperbackend.herokuapp.com/api/student/list",
+            "User Detail": "https://studenthelperbackend.herokuapp.com/api/user/id",
             "Teacher Signup": "https://studenthelperbackend.herokuapp.com/api/teacher/signup",
             "Student Signup": "https://studenthelperbackend.herokuapp.com/api/student/signup",
             "Login Users": "https://studenthelperbackend.herokuapp.com/api/token/",
@@ -30,6 +31,7 @@ def api_endpoints(request):
         "Local": {
             "Teacher List": "http://localhost:8000/api/teacher/list",
             "Student List": "http://localhost:8000/api/student/list",
+            "User Detail": "http://localhost:8000/api/user/id",
             "Teacher Signup": "http://localhost:8000/api/teacher/signup",
             "Student Signup": "http://localhost:8000/api/student/signup",
             "Login Users": "http://localhost:8000/api/token/",
@@ -114,3 +116,58 @@ class UserLogoutView(APIView):
             return Response("Success")
         except:
             return Response("Invalid token")
+
+
+# user detail view
+# class TeacherDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     serializer_class = TeacherSignupSerializer
+#     lookup_url_kwarg = 'id'
+#     # lookup_field = 'id'
+#     queryset = User.objects.all()
+
+
+# Teacher Detail view
+# class TeacherDetailView(generics.RetrieveAPIView):
+#     serializer_class = TeacherSignupSerializer2
+#     queryset = Teacher.objects.all()
+
+
+# Teacher detail view
+class UserDetailView(APIView):
+    def get(self, request, **kwargs):
+        try:
+            id = kwargs['id']
+            user = User.objects.get(id=id)
+            username = user.username
+            email = user.email
+            is_student = user.is_student
+            is_teacher = user.is_teacher
+            if user.is_student:
+                student = Student.objects.get(user__id=id)
+                institute = student.institute_name
+                class_name = student.class_name
+                return Response({
+                    "username": username,
+                    "email": email,
+                    # "is_student": is_student,
+                    # "is_teacher": is_teacher,
+                    "status": "Student",
+                    "institute": institute,
+                    "class_name": class_name,
+                })
+            elif is_teacher:
+                teacher = Teacher.objects.get(user__id=id)
+                institute = teacher.institute_name
+                subject = teacher.subject
+                return Response({
+                    "username": username,
+                    "email": email,
+                    # "is_student": is_student,
+                    # "is_teacher": is_teacher,
+                    "status": "Teacher",
+                    "institute": institute,
+                    "subject": subject,
+                })
+
+        except:
+            return Response({"message": "User not found"})
