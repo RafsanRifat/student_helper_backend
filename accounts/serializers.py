@@ -98,3 +98,16 @@ class StudentSignupSerializer2(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+
+class StudentUpdateSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+    email = serializers.ReadOnlyField(source='user.email')
+    id = serializers.ReadOnlyField(source='user.id')
+
+    class Meta:
+        model = Student
+        fields = ['id', 'class_name', 'institute_name', 'username', 'email', ]
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }

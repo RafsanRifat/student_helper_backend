@@ -11,7 +11,7 @@ from django.http import request
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from .serializers import TeacherSignupSerializer, UserSerializer, TeacherSignupSerializer2, StudentSignupSerializer, \
-    StudentSignupSerializer2
+    StudentSignupSerializer2, StudentUpdateSerializer
 from .models import Teacher, Student, User
 from .permissions import IsTeacherUser
 
@@ -175,5 +175,5 @@ class UserDetailView(APIView):
 
 # Teacher update
 class UserUpdateApiView(generics.RetrieveUpdateAPIView):
-    serializer_class = UserSerializer
-    queryset = User.objects.all()
+    serializer_class = StudentUpdateSerializer
+    queryset = Student.objects.all()
