@@ -22,7 +22,7 @@ def api_endpoints(request):
         "Live": {
             "Teacher List": "https://studenthelperbackend.herokuapp.com/api/teacher/list",
             "Student List": "https://studenthelperbackend.herokuapp.com/api/student/list",
-            "User Detail": "https://studenthelperbackend.herokuapp.com/api/user/id",
+            "User Detail": "https://studenthelperbackend.herokuapp.com/api/userdetail/id",
             "Teacher Signup": "https://studenthelperbackend.herokuapp.com/api/teacher/signup",
             "Student Signup": "https://studenthelperbackend.herokuapp.com/api/student/signup",
             "Login Users": "https://studenthelperbackend.herokuapp.com/api/token/",
@@ -31,7 +31,7 @@ def api_endpoints(request):
         "Local": {
             "Teacher List": "http://localhost:8000/api/teacher/list",
             "Student List": "http://localhost:8000/api/student/list",
-            "User Detail": "http://localhost:8000/api/user/id",
+            "User Detail": "http://localhost:8000/api/userdetail/id",
             "Teacher Signup": "http://localhost:8000/api/teacher/signup",
             "Student Signup": "http://localhost:8000/api/student/signup",
             "Login Users": "http://localhost:8000/api/token/",
@@ -171,3 +171,9 @@ class UserDetailView(APIView):
 
         except:
             return Response({"message": "User not found"})
+
+
+# Teacher update
+class UserUpdateApiView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
